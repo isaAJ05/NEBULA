@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+/* ───────────── Tema "Nébula": morados profundos, oscuros y brillantes ───────────── */
+@theme {
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Unbounded", "Space Grotesk", ui-sans-serif, sans-serif;
+
+  --color-void: #07020f;
+  --color-cosmos-900: #0e0620;
+  --color-cosmos-800: #170b33;
+  --color-cosmos-700: #241049;
+  --color-nebula-300: #d8b4fe;
+  --color-nebula-400: #c084fc;
+  --color-nebula-500: #a855f7;
+  --color-nebula-600: #9333ea;
+  --color-plasma-400: #f472b6;
+  --color-plasma-500: #e879f9;
+  --color-stardust: #ede9fe;
+
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-spin-slow: spin 18s linear infinite;
+  --animate-pulse-glow: pulse-glow 3.2s ease-in-out infinite;
+  --animate-toast-in: toast-in 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+  --animate-fade-up: fade-up 0.6s ease-out both;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-14px); }
+  }
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.55; transform: scale(1); }
+    50% { opacity: 0.9; transform: scale(1.06); }
+  }
+  @keyframes toast-in {
+    from { opacity: 0; transform: translateX(110%) scale(0.95); }
+    to { opacity: 1; transform: translateX(0) scale(1); }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+@keyframes shimmer {
+  from { background-position: -200% 0; }
+  to { background-position: 200% 0; }
+}
+@keyframes toast-progress {
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0); }
+}
+
+/* Texto con degradado brillante */
+@utility text-glow {
+  background-image: linear-gradient(100deg, #f5d0fe 0%, #c084fc 35%, #e879f9 65%, #a5b4fc 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 22px rgb(192 132 252 / 0.45));
+}
+
+/* Tarjeta de vidrio esmerilado */
+@utility glass {
+  background: linear-gradient(145deg, rgb(36 16 73 / 0.55), rgb(14 6 32 / 0.65));
+  border: 1px solid rgb(192 132 252 / 0.18);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* Resplandor morado */
+@utility glow {
+  box-shadow: 0 0 0 1px rgb(192 132 252 / 0.25), 0 10px 40px -10px rgb(168 85 247 / 0.55);
+}
+
+@utility skeleton {
+  background: linear-gradient(90deg, rgb(36 16 73 / 0.6) 0%, rgb(88 28 135 / 0.45) 50%, rgb(36 16 73 / 0.6) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-void font-sans text-stardust antialiased;
+    min-height: 100dvh;
+  }
+  ::selection {
+    background: rgb(232 121 249 / 0.4);
+    color: white;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-plasma-500);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  /* Scrollbar morada */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #7e22ce transparent;
+  }
+
+  /* Cursor morado brillante (SVG con resplandor). Solo en dispositivos con mouse. */
+  @media (pointer: fine) {
+    html,
+    body {
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23f5f3ff'/%3E%3Cstop offset='.45' stop-color='%23c084fc'/%3E%3Cstop offset='1' stop-color='%239333ea'/%3E%3C/linearGradient%3E%3Cfilter id='f' x='-50%25' y='-50%25' width='200%25' height='200%25'%3E%3CfeGaussianBlur stdDeviation='1.6' result='b'/%3E%3CfeMerge%3E%3CfeMergeNode in='b'/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Cpath filter='url(%23f)' d='M5 4l18 9.5-7.6 1.9L11.6 23z' fill='url(%23g)' stroke='%23fff' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E") 5 4, auto;
+    }
+    a,
+    button,
+    select,
+    label,
+    [role='button'] {
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ffffff'/%3E%3Cstop offset='.4' stop-color='%23c084fc'/%3E%3Cstop offset='1' stop-color='%23a855f7'/%3E%3C/linearGradient%3E%3Cfilter id='f' x='-50%25' y='-50%25' width='200%25' height='200%25'%3E%3CfeGaussianBlur stdDeviation='2.2' result='b'/%3E%3CfeMerge%3E%3CfeMergeNode in='b'/%3E%3CfeMergeNode in='b'/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Cpath filter='url(%23f)' d='M5 4l18 9.5-7.6 1.9L11.6 23z' fill='url(%23g)' stroke='%23fff' stroke-width='1.4' stroke-linejoin='round'/%3E%3C/svg%3E") 5 4, pointer;
+    }
+    button:disabled {
+      cursor: not-allowed;
+    }
+    input:not([type='checkbox']):not([type='radio']),
+    textarea {
+      cursor: text;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
